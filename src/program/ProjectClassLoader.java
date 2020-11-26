@@ -2,6 +2,7 @@ package program;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.File;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,12 +14,16 @@ public class ProjectClassLoader extends ClassLoader{
         super(parent);
     }
 
-    public Class loadClass(String name) throws ClassNotFoundException {
+    public Class loadClass(String name, String path) throws ClassNotFoundException {
         String sep = System.getProperty("file.separator");
-        String url = "file:" + System.getProperty("user.dir") + sep + "UnitConverter" + sep + "bin" + sep + 
-        "converters" + sep  + "CentimetreConverter.class";
+        String url = "file:" + path;
 
-        if(!"converters.CentimetreConverter".equals(name))
+        System.out.println("Estou em LoadClass (no ClassLoader), usando o name: " + name);
+        System.out.println("Estou usando o url: " + path);
+        //String url = "file:" + System.getProperty("user.dir") + sep + "UnitConverter" + sep + "bin" + sep + 
+        //"converters" + sep  + "CentimetreConverter.class";
+
+        if(!("converters." + name).equals(name))
             return super.loadClass(name);
         
             try {   
@@ -37,7 +42,7 @@ public class ProjectClassLoader extends ClassLoader{
 
                 byte[] classData = buffer.toByteArray();
 
-                return defineClass("converters.CentimetreConverter", classData, 0, classData.length); 
+                return defineClass(("converters." + name), classData, 0, classData.length); 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
