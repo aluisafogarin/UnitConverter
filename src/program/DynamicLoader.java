@@ -12,20 +12,21 @@ public class DynamicLoader {
 
         ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
         ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
-        Class myObjectClass = classLoader.loadClass("converters.CentimetreConverter"); 
+        Class myClass = classLoader.loadClass("converters.CentimetreConverter"); 
 
-        CentimetreConverter object1 = (CentimetreConverter) myObjectClass.newInstance();
-        BaseConverter object2 = (BaseConverter) myObjectClass.newInstance();
-
-        //CentimetreConverter obj1 = new CentimetreConverter();
-        //System.out.println(object1.fromBasicUnit(1));
+        Thread.currentThread().setContextClassLoader(parentClassLoader);
+        //CentimetreConverter object1 = (CentimetreConverter) myClass.newInstance();
+        BaseConverter object2 = (BaseConverter) myClass.newInstance();
 
         //create new class loader so classes can be reloaded.
         classLoader = new ProjectClassLoader(parentClassLoader);
-        myObjectClass = classLoader.loadClass("converters.CentimetreConverter");
+        myClass = classLoader.loadClass("converters.CentimetreConverter");
 
-        object1 = (CentimetreConverter) myObjectClass.newInstance();
-        object2 = (BaseConverter) myObjectClass.newInstance();
+        //object1 = (CentimetreConverter) myClass.newInstance();
+        object2 = (BaseConverter) myClass.newInstance();
+        System.out.println(object2.toBasicUnit(100));
+
+        //System.out.println(object1.fromBasicUnit(1));
         //CentimetreConverter obj2 = new CentimetreConverter();
     }
 }

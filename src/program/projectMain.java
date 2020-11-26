@@ -7,8 +7,17 @@ public class ProjectMain {
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
-        ProjectMain execution = new ProjectMain();
-        execution.start();
+        try {
+            ProjectMain execution = new ProjectMain();
+            execution.start();
+
+        } catch(IllegalArgumentException e) {
+            System.out.println("Invalid arguments: " + e.getMessage());
+        } catch(InstantiationException e) {
+            System.out.println("Error to instantiate object: " + e.getMessage());
+        } catch(ClassNotFoundException e) {
+            System.out.println("Error to load " + e.getClass() + " : " + e.getMessage());
+        }
     }
 
     public void start() throws 
@@ -16,7 +25,7 @@ public class ProjectMain {
         IllegalAccessException, 
         InstantiationException {
         System.out.println("Starting the program...");
-        Control.loadClasses();
+        DynamicLoader.startDynamicClassLoader();
     }
 
     public void finish() {
