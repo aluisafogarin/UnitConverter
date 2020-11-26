@@ -12,5 +12,11 @@ public class DecimetreConverter implements BaseConverter {
         return (value/10);
     }
 
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
     
 }

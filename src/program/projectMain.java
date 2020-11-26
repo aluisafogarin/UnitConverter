@@ -26,11 +26,11 @@ public class ProjectMain {
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
-        System.out.println("Starting the program...");
-        DynamicLoader.startDynamicClassLoader(DynamicLoader.getClassesName(), DynamicLoader.getClassPath());
-        for (MeasureType m : MeasureType.values()) {
-            System.out.println(m.getBasicUnit());
-        }
+        System.out.println("Loading classes...");
+        System.out.println("All classes were loaded!");
+ 
+        ConversionManagement objeto = new ConversionManagement("MetreConverter", "CentimetreConverter");
+        objeto.conversion(100);
     }
 
     public void finish() {

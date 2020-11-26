@@ -1,17 +1,23 @@
 package converters;
 
 public class CentimetreConverter implements BaseConverter {
+    private static MeasureType measureType = MeasureType.LENGHT;
 
-    /* Converts M -> CM*/
+    /* Converts M -> CM */
     @Override
     public double fromBasicUnit(double value) {
         return (value * 100);
     }
 
-    /* Converts CM -> M*/
+    /* Converts CM -> M */
     @Override
     public double toBasicUnit(double value) {
-        return (value/100);
+        return (value / 100);
+    }
+
+    @Override
+    public MeasureType getMeasureType() {
+        return measureType;
     }
     
 }

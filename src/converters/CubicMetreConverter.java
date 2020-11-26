@@ -12,5 +12,11 @@ public class CubicMetreConverter implements BaseConverter{
     public double toBasicUnit(double value) {
         return value;
     }
+
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

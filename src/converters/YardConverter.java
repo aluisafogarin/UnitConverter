@@ -11,5 +11,11 @@ public class YardConverter implements BaseConverter {
     public double toBasicUnit(double value) {
         return (value / 1.09361);
     }
+
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

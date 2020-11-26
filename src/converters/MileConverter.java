@@ -11,5 +11,11 @@ public class MileConverter implements BaseConverter {
     public double toBasicUnit(double value) {
         return (value / 0.006213689);
     }
+
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

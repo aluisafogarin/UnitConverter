@@ -6,22 +6,38 @@ import converters.BaseConverter;
 import java.util.Arrays;
 
 public class DynamicLoader {
-    
-    public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
+    //public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
+    public static BaseConverter startDynamicClassLoader(String name, String path) throws
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
         
         ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
         ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
+        
+        //System.out.println("Tentando iniciar a classe: " + name);
+        //System.out.println("Estou usando o path para a classe: " + path);
+        Class myClass = classLoader.loadClass("converters." + name); 
 
-        for (String name : classNames) {
+        //Thread.currentThread().setContextClassLoader(parentClassLoader);
+            
+        BaseConverter object2 = (BaseConverter) myClass.newInstance();
+
+        //create new class loader so classes can be reloaded.
+        classLoader = new ProjectClassLoader(parentClassLoader);
+        myClass = classLoader.loadClass("converters." + name, path.toString());
+
+        object2 = (BaseConverter) myClass.newInstance();
+        System.out.println("Class Loaded: " + name);
+        return object2;
+    }
+        /* for (String name : classNames) {
             /* The interface can't be dynamically loaded */
-            if (!name.equals("BaseConverter") && !name.equals("MeasureType")) {
+            /* if (!name.equals("BaseConverter") && !name.equals("MeasureType")) {
                 for (String path : classPath) {
                     if (path.contains(name)) {
-                        System.out.println("Tentando iniciar a classe: " + name);
-                        System.out.println("Estou usando o path para a classe: " + path);
+                        //System.out.println("Tentando iniciar a classe: " + name);
+                        //System.out.println("Estou usando o path para a classe: " + path);
                         Class myClass = classLoader.loadClass("converters." + name); 
 
                         //Thread.currentThread().setContextClassLoader(parentClassLoader);
@@ -29,17 +45,18 @@ public class DynamicLoader {
                         BaseConverter object2 = (BaseConverter) myClass.newInstance();
 
                         //create new class loader so classes can be reloaded.
-                        //classLoader = new ProjectClassLoader(parentClassLoader);
-                        //myClass = classLoader.loadClass("converters." + name, path.toString());
+                        classLoader = new ProjectClassLoader(parentClassLoader);
+                        myClass = classLoader.loadClass("converters." + name, path.toString());
 
-                    
-                        //object2 = (BaseConverter) myClass.newInstance();
-                        System.out.println(object2.toBasicUnit(100));
+                        object2 = (BaseConverter) myClass.newInstance();
+                        System.out.println("Class Loaded: " + name);
+                        //System.out.println(object2.toBasicUnit(100));
                     }
                 }
-            }
-        }
-    }
+            } */
+        //} 
+
+//    }
 
     /* Gets every .class file name */
     public static String[] getClassesName() {
@@ -59,7 +76,7 @@ public class DynamicLoader {
     }
 
     /* Gets the path to the .class */
-    public static String[] getClassPath() {
+    public static String[] getAllClassesPath() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
         "bin" + sep + "converters");
@@ -67,7 +84,19 @@ public class DynamicLoader {
         File[] fileClassPath = file.listFiles();
 
         String classPath[] = Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
-        
+
         return classPath;
+    }
+
+    public static String getSingleClassPath(String className) {
+        String[] classPath = getAllClassesPath();
+        String path = "";
+
+        for (String p: classPath) {
+            if (p.contains(className))
+                path = p;
+        }
+       
+        return path;
     }
 }

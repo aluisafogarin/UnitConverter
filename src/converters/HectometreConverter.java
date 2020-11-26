@@ -11,5 +11,11 @@ public class HectometreConverter implements BaseConverter {
     public double toBasicUnit(double value) {
         return (value*100);
     }
+
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }

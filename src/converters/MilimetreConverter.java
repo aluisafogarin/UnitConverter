@@ -11,5 +11,11 @@ public class MilimetreConverter implements BaseConverter {
     public double toBasicUnit(double value) {
         return (value/1000);
     }
+
+    @Override
+    public MeasureType getMeasureType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
     
 }
