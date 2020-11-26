@@ -4,13 +4,13 @@ public class CentimetreConverter implements BaseConverter {
 
     /* Converts M -> CM*/
     @Override
-    public float fromBasicUnit(float value) {
+    public double fromBasicUnit(double value) {
         return (value * 100);
     }
 
     /* Converts CM -> M*/
     @Override
-    public float toBasicUnit(float value) {
+    public double toBasicUnit(double value) {
         return (value/100);
     }
     

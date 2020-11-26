@@ -3,10 +3,11 @@ package program;
 import java.io.File;
 
 import converters.BaseConverter;
+import java.util.Arrays;
 
 public class DynamicLoader {
     
-    public static void startDynamicClassLoader(String[] classNames, File[] classPath) throws 
+    public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
@@ -16,23 +17,25 @@ public class DynamicLoader {
 
         for (String name : classNames) {
             /* The interface can't be dynamically loaded */
-            if (!name.equals("BaseConverter")) {
-                for (File path : classPath) {
-                    System.out.println("Tentando iniciar a classe: " + name);
-                    System.out.println("Estou usando o path para a classe: " + path);
-                    Class myClass = classLoader.loadClass("converters." + name); 
+            if (!name.equals("BaseConverter") && !name.equals("MeasureType")) {
+                for (String path : classPath) {
+                    if (path.contains(name)) {
+                        System.out.println("Tentando iniciar a classe: " + name);
+                        System.out.println("Estou usando o path para a classe: " + path);
+                        Class myClass = classLoader.loadClass("converters." + name); 
 
-                    Thread.currentThread().setContextClassLoader(parentClassLoader);
-                    //CentimetreConverter object1 = (CentimetreConverter) myClass.newInstance();
-                    BaseConverter object2 = (BaseConverter) myClass.newInstance();
+                        //Thread.currentThread().setContextClassLoader(parentClassLoader);
+                        
+                        BaseConverter object2 = (BaseConverter) myClass.newInstance();
 
-                    //create new class loader so classes can be reloaded.
-                    classLoader = new ProjectClassLoader(parentClassLoader);
-                    myClass = classLoader.loadClass("converters." + name, path.toString());
+                        //create new class loader so classes can be reloaded.
+                        //classLoader = new ProjectClassLoader(parentClassLoader);
+                        //myClass = classLoader.loadClass("converters." + name, path.toString());
 
-                    //object1 = (CentimetreConverter) myClass.newInstance();
-                    object2 = (BaseConverter) myClass.newInstance();
-                    System.out.println(object2.toBasicUnit(100));
+                    
+                        //object2 = (BaseConverter) myClass.newInstance();
+                        System.out.println(object2.toBasicUnit(100));
+                    }
                 }
             }
         }
@@ -56,12 +59,15 @@ public class DynamicLoader {
     }
 
     /* Gets the path to the .class */
-    public static File[] getClassPath() {
+    public static String[] getClassPath() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
         "bin" + sep + "converters");
+        
+        File[] fileClassPath = file.listFiles();
 
-        File[] classPath = file.listFiles();
+        String classPath[] = Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
+        
         return classPath;
     }
 }

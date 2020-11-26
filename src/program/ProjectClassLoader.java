@@ -15,7 +15,7 @@ public class ProjectClassLoader extends ClassLoader{
     }
 
     public Class loadClass(String name, String path) throws ClassNotFoundException {
-        String sep = System.getProperty("file.separator");
+        //String sep = System.getProperty("file.separator");
         String url = "file:" + path;
 
         System.out.println("Estou em LoadClass (no ClassLoader), usando o name: " + name);

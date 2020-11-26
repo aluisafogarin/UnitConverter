@@ -1,5 +1,6 @@
 package program;
 
+import converters.MeasureType;
 public class ProjectMain {
     public static void main (String[] args) throws 
         ClassNotFoundException, 
@@ -27,6 +28,9 @@ public class ProjectMain {
         InstantiationException {
         System.out.println("Starting the program...");
         DynamicLoader.startDynamicClassLoader(DynamicLoader.getClassesName(), DynamicLoader.getClassPath());
+        for (MeasureType m : MeasureType.values()) {
+            System.out.println(m.getBasicUnit());
+        }
     }
 
     public void finish() {
