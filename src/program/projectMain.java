@@ -4,7 +4,7 @@ import converters.MeasureType;
 public class ProjectMain {
     public static void main (String[] args) throws 
         ClassNotFoundException, 
-        IllegalAccessException, 
+        IllegalAccessException,
         InstantiationException,
         ClassCastException {
         try {
@@ -27,10 +27,7 @@ public class ProjectMain {
         IllegalAccessException, 
         InstantiationException {
         System.out.println("Starting the program...");
-        DynamicLoader.startDynamicClassLoader(DynamicLoader.getClassesName(), DynamicLoader.getClassPath());
-        for (MeasureType m : MeasureType.values()) {
-            System.out.println(m.getBasicUnit());
-        }
+        ConversionControler controler = new ConversionControler("MetreConverter", "CentimetreConverter");
     }
 
     public void finish() {

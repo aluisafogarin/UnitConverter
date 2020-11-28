@@ -1,6 +1,7 @@
 package program;
 
 import java.io.File;
+import java.lang.invoke.MethodHandles.Lookup.ClassOption;
 
 import converters.BaseConverter;
 import java.util.Arrays;
@@ -32,13 +33,33 @@ public class DynamicLoader {
                         //classLoader = new ProjectClassLoader(parentClassLoader);
                         //myClass = classLoader.loadClass("converters." + name, path.toString());
 
-                    
                         //object2 = (BaseConverter) myClass.newInstance();
                         System.out.println(object2.toBasicUnit(100));
                     }
                 }
             }
         }
+    }
+
+    public BaseConverter loadSingleClass(String className, String classPath) throws
+        ClassNotFoundException, 
+        IllegalAccessException, 
+        InstantiationException {
+    
+        ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
+        ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
+            
+        Class myClass = classLoader.loadClass("converters." + className); 
+        //Thread.currentThread().setContextClassLoader(parentClassLoader);
+        BaseConverter classObject = (BaseConverter) myClass.newInstance();
+
+        //create new class loader so classes can be reloaded.
+        classLoader = new ProjectClassLoader(parentClassLoader);
+        myClass = classLoader.loadClass("converters." + className, classPath.toString());
+
+        classObject = (BaseConverter) myClass.newInstance();
+        //System.out.println(object2.toBasicUnit(100));  
+        return classObject;
     }
 
     /* Gets every .class file name */

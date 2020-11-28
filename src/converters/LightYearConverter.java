@@ -1,6 +1,7 @@
 package converters;
 
 public class LightYearConverter implements BaseConverter {
+    private MeasureType measureType = MeasureType.LENGHT;
 
     @Override
     public double fromBasicUnit(double value) {
@@ -10,6 +11,11 @@ public class LightYearConverter implements BaseConverter {
     @Override
     public double toBasicUnit(double value) {
         return 0;
+    }
+
+    @Override
+    public MeasureType getMeasureType() {
+        return measureType;
     }
     
 }

@@ -1,7 +1,8 @@
 package converters;
 
 /* Basic Unit for lenght*/
-public class MeterConverter implements BaseConverter {
+public class MetreConverter implements BaseConverter {
+    private MeasureType measureType = MeasureType.LENGHT;
 
     @Override
     public double fromBasicUnit(double value) {
@@ -11,6 +12,11 @@ public class MeterConverter implements BaseConverter {
     @Override
     public double toBasicUnit(double value) {
         return value;
+    }
+
+    @Override
+    public MeasureType getMeasureType() {
+        return measureType;
     }
       
 }
