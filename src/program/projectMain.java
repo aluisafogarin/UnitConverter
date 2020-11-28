@@ -26,8 +26,16 @@ public class ProjectMain {
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
+<<<<<<< HEAD
         System.out.println("Starting the program...");
         ConversionControler controler = new ConversionControler("MetreConverter", "CentimetreConverter");
+=======
+        System.out.println("Loading classes...");
+        System.out.println("All classes were loaded!");
+ 
+        ConversionManagement objeto = new ConversionManagement("MetreConverter", "CentimetreConverter");
+        objeto.conversion(100);
+>>>>>>> 09ea3b35ea3f3efb4ec305a359a2be69e54b107a
     }
 
     public void finish() {

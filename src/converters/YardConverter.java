@@ -15,7 +15,12 @@ public class YardConverter implements BaseConverter {
 
     @Override
     public MeasureType getMeasureType() {
+<<<<<<< HEAD
         return measureType;
+=======
+        // TODO Auto-generated method stub
+        return null;
+>>>>>>> 09ea3b35ea3f3efb4ec305a359a2be69e54b107a
     }
     
 }

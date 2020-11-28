@@ -21,7 +21,7 @@ public class ConversionControler {
         IllegalAccessException, 
         InstantiationException {
         
-        DynamicLoader.startDynamicClassLoader(DynamicLoader.getClassesName(), DynamicLoader.getClassPath());
+        //DynamicLoader.startDynamicClassLoader(DynamicLoader.getClassesName(), DynamicLoader.getClassPath());
     }
 
 

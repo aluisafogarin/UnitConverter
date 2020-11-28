@@ -17,12 +17,6 @@ public class ProjectClassLoader extends ClassLoader{
     public Class loadClass(String name, String path) throws ClassNotFoundException {
         //String sep = System.getProperty("file.separator");
         String url = "file:" + path;
-
-        System.out.println("Estou em LoadClass (no ClassLoader), usando o name: " + name);
-        System.out.println("Estou usando o url: " + path);
-        //String url = "file:" + System.getProperty("user.dir") + sep + "UnitConverter" + sep + "bin" + sep + 
-        //"converters" + sep  + "CentimetreConverter.class";
-
         if(!("converters." + name).equals(name))
             return super.loadClass(name);
         
@@ -49,7 +43,7 @@ public class ProjectClassLoader extends ClassLoader{
                 e.printStackTrace();
             }
             
-            return null;
+        return null;
     }
 }
 

@@ -8,15 +8,14 @@ public class CentimetreConverter implements BaseConverter {
         return (value * 100);
     }
 
-    /* Converts CM -> M*/
+    /* Converts CM -> M */
     @Override
     public double toBasicUnit(double value) {
-        return (value/100);
+        return (value / 100);
     }
 
     @Override
     public MeasureType getMeasureType() {
-        // TODO Auto-generated method stub
         return measureType;
     }
     

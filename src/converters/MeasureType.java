@@ -1,7 +1,7 @@
 package converters;
 
 public enum MeasureType {
-    LENGHT("distance", "metre (m)");
+    LENGHT("lenght", "metre (m)");
 /*     AREA("area", "square metre (m\\u33a1)"),
     VOLUME("volume", "litre (L)"),
     MASS("mass", "kilogram (kg)"),
