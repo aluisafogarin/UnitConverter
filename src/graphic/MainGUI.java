@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package resources;
+package graphic;
 
 /**
  *
@@ -55,11 +55,13 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        /* From Unity Box */
         BoxConvertFrom.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         BoxConvertFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Centimetre (cm)", "Decametre (dam)", "Decimetre (dm)", "Hectometre (hm)", "Inch (in)", "Kilimetre (km)", "Metre (m)", "Micometre (?m)" }));
 
+        /* To Unity Box */
         BoxTo.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        BoxTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Centimetre (cm)", "Decametre (dam)", "Decimetre (dm)", "Hectometre (hm)", "Inch (in)", "Kilimetre (km)", "Metre (m)", "Micometre (?m" }));
+        //BoxTo.setModel(new javax.swing.DefaultComboBoxModel<>();
 
         TextConvertFrom.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
 
@@ -216,7 +218,7 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void exec() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

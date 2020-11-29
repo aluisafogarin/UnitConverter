@@ -10,13 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DynamicLoader {
+    private static ArrayList<String> classesNames = new ArrayList<String>();
     private static ArrayList<String> typeClass = new ArrayList<String>();
 
     //public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
     public static BaseConverter singleClassLoader(String name, String path) throws
-        ClassNotFoundException, 
-        IllegalAccessException, 
-        InstantiationException {
+            ClassNotFoundException, 
+            IllegalAccessException, 
+            InstantiationException {
         
         ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
         ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
@@ -40,20 +41,23 @@ public class DynamicLoader {
     }
 
     /* Gets every .class file name */
-    public static String[] getAllClassesName() {
+    public static void setClassesName() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
         "bin" + sep + "converters");
         String[] classNames = file.list();
-
         /* Removes .class from every class name */
         for (int i = 0; i < classNames.length; i++) {
             String name = classNames[i];
             if (name.length() > 0)
                 name = name.substring(0, name.length() - 6);
             classNames[i] = name;
+            classesNames.add(name);
         }
-        return classNames;
+    }
+
+    public static ArrayList<String> getClassesNames() {
+        return classesNames;
     }
 
     /* Gets the path to the .class */
@@ -63,8 +67,8 @@ public class DynamicLoader {
         "bin" + sep + "converters");
         
         File[] fileClassPath = file.listFiles();
-
-        String classesPath[] = Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
+        String classesPath[] = 
+            Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
 
         return classesPath;
     }

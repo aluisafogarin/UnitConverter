@@ -20,11 +20,10 @@ public class ConversionManagement {
         this.toUnitClass = toUnit + ".class";
     }
 
-    public void conversion(double value) throws 
-        ClassNotFoundException, 
-        InstantiationException, 
-        IllegalAccessException {
-        
+    public void manager() throws 
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
+        DynamicLoader.setClassesName();
+        loadClasses();
     }
 
     public void loadClasses() throws 
@@ -37,16 +36,16 @@ public class ConversionManagement {
             DynamicLoader.singleClassLoader(fromUnit, DynamicLoader.getSingleClassPath(fromUnit));
             setTypeConversion(fromUnitObject);
 
-        for (String className : DynamicLoader.getAllClassesName()) {
-            /* The interface can't be dynamically loaded */
+        for (String className : DynamicLoader.getClassesNames()) {
             if (!className.equals("BaseConverter") && !className.equals("MeasureType")) {
                 for (String classPath : DynamicLoader.getAllClassesPath()) {
                     if (classPath.contains(className)) {
-                        BaseConverter classObject = DynamicLoader.singleClassLoader(className, classPath);
+                        BaseConverter classObject = 
+                            DynamicLoader.singleClassLoader(className, classPath);
                         MeasureType typeClass = classObject.getMeasureType();
-                        if ((typeConversion).contains(typeClass.name())) {
+
+                        if ((typeConversion).contains(typeClass.name())) 
                             setAvailableClasses(className);
-                        }
                     }
 
                 }
@@ -58,6 +57,10 @@ public class ConversionManagement {
         return typeConversion;
     }
 
+    public ArrayList<String> getAvailableClasses() {
+        return availableClasses;
+    }
+
     public void setTypeConversion(BaseConverter classObject) {
         MeasureType measureType = classObject.getMeasureType();
         typeConversion = measureType.name();
@@ -67,7 +70,5 @@ public class ConversionManagement {
         availableClasses.add(className);
     }
 
-    public ArrayList<String> getAvailableClasses() {
-        return availableClasses;
-    }
+   
 }
