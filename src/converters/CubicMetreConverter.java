@@ -2,7 +2,7 @@ package converters;
 
 /* Basic Unit for Volume */
 public class CubicMetreConverter implements BaseConverter{
-    private MeasureType measureType = MeasureType.LENGHT;
+    private MeasureType measureType = MeasureType.VOLUME;
 
     @Override
     public double fromBasicUnit(double value) {

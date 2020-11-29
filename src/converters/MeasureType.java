@@ -1,8 +1,8 @@
 package converters;
 
 public enum MeasureType {
-    LENGHT("lenght", "metre (m)");
-/*     AREA("area", "square metre (m\\u33a1)"),
+    LENGHT("lenght", "metre (m)"),
+    AREA("area", "square metre (m\\u33a1)"),
     VOLUME("volume", "litre (L)"),
     MASS("mass", "kilogram (kg)"),
     TIME("time", "second (s)"),
@@ -12,7 +12,7 @@ public enum MeasureType {
     PRESSURE("pressure", "pascal (Pa)"),
     ENERGY("energy", "joule (J)"),
     POWER("power", "watt (W)"),
-    VISCOSITY("viscosity", "Pa·s"); */
+    VISCOSITY("viscosity", "Pa·s");
     
     private String type;
     private String basicUnit;

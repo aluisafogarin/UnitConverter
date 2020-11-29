@@ -4,11 +4,16 @@ import java.io.File;
 import java.lang.invoke.MethodHandles.Lookup.ClassOption;
 
 import converters.BaseConverter;
+import converters.MeasureType;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DynamicLoader {
+    private static ArrayList<String> typeClass = new ArrayList<String>();
+
     //public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
-    public static BaseConverter startDynamicClassLoader(String name, String path) throws
+    public static BaseConverter singleClassLoader(String name, String path) throws
         ClassNotFoundException, 
         IllegalAccessException, 
         InstantiationException {
@@ -22,71 +27,20 @@ public class DynamicLoader {
 
         //Thread.currentThread().setContextClassLoader(parentClassLoader);
             
-        BaseConverter object2 = (BaseConverter) myClass.newInstance();
+        BaseConverter classObject = (BaseConverter) myClass.newInstance();
 
         //create new class loader so classes can be reloaded.
         classLoader = new ProjectClassLoader(parentClassLoader);
         myClass = classLoader.loadClass("converters." + name, path.toString());
 
-        object2 = (BaseConverter) myClass.newInstance();
-        System.out.println("Class Loaded: " + name);
-        return object2;
-    }
-        /* for (String name : classNames) {
-            /* The interface can't be dynamically loaded */
-            /* if (!name.equals("BaseConverter") && !name.equals("MeasureType")) {
-                for (String path : classPath) {
-                    if (path.contains(name)) {
-                        //System.out.println("Tentando iniciar a classe: " + name);
-                        //System.out.println("Estou usando o path para a classe: " + path);
-                        Class myClass = classLoader.loadClass("converters." + name); 
-
-                        //Thread.currentThread().setContextClassLoader(parentClassLoader);
-                        
-                        BaseConverter object2 = (BaseConverter) myClass.newInstance();
-
-                        //create new class loader so classes can be reloaded.
-                        classLoader = new ProjectClassLoader(parentClassLoader);
-                        myClass = classLoader.loadClass("converters." + name, path.toString());
-
-<<<<<<< HEAD
-                        //object2 = (BaseConverter) myClass.newInstance();
-                        System.out.println(object2.toBasicUnit(100));
-=======
-                        object2 = (BaseConverter) myClass.newInstance();
-                        System.out.println("Class Loaded: " + name);
-                        //System.out.println(object2.toBasicUnit(100));
->>>>>>> 09ea3b35ea3f3efb4ec305a359a2be69e54b107a
-                    }
-                }
-            } */
-        //} 
-
-//    }
-
-    public BaseConverter loadSingleClass(String className, String classPath) throws
-        ClassNotFoundException, 
-        IllegalAccessException, 
-        InstantiationException {
-    
-        ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
-        ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
-            
-        Class myClass = classLoader.loadClass("converters." + className); 
-        //Thread.currentThread().setContextClassLoader(parentClassLoader);
-        BaseConverter classObject = (BaseConverter) myClass.newInstance();
-
-        //create new class loader so classes can be reloaded.
-        classLoader = new ProjectClassLoader(parentClassLoader);
-        myClass = classLoader.loadClass("converters." + className, classPath.toString());
-
         classObject = (BaseConverter) myClass.newInstance();
-        //System.out.println(object2.toBasicUnit(100));  
+
+        System.out.println("Class Loaded: " + name);
         return classObject;
     }
 
     /* Gets every .class file name */
-    public static String[] getClassesName() {
+    public static String[] getAllClassesName() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
         "bin" + sep + "converters");
@@ -110,11 +64,12 @@ public class DynamicLoader {
         
         File[] fileClassPath = file.listFiles();
 
-        String classPath[] = Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
+        String classesPath[] = Arrays.stream(fileClassPath).map(File::getAbsolutePath).toArray(String[]::new);
 
-        return classPath;
+        return classesPath;
     }
 
+    /* Get path to a single class */
     public static String getSingleClassPath(String className) {
         String[] classPath = getAllClassesPath();
         String path = "";
@@ -126,4 +81,5 @@ public class DynamicLoader {
        
         return path;
     }
+
 }
