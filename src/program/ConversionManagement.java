@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import converters.BaseConverter;
 import converters.MeasureType;
 
-public class ConversionManagement {
+public class ConversionManagement 
+{
     private String fromUnit;
     private String fromUnitClass;
     private String toUnit;
@@ -21,15 +22,13 @@ public class ConversionManagement {
     }
 
     public void manager() throws 
-            ClassNotFoundException, InstantiationException, IllegalAccessException {
+        ClassNotFoundException, InstantiationException, IllegalAccessException {
         DynamicLoader.setClassesName();
         loadClasses();
     }
 
     public void loadClasses() throws 
-        ClassNotFoundException, 
-        InstantiationException, 
-        IllegalAccessException {
+        ClassNotFoundException, InstantiationException, IllegalAccessException {
         
         /* First of all, fromUnity is loaded */
         BaseConverter fromUnitObject = 
@@ -47,7 +46,6 @@ public class ConversionManagement {
                         if ((typeConversion).contains(typeClass.name())) 
                             setAvailableClasses(className);
                     }
-
                 }
             }
         }
@@ -69,6 +67,4 @@ public class ConversionManagement {
     public void setAvailableClasses(String className) {
         availableClasses.add(className);
     }
-
-   
 }

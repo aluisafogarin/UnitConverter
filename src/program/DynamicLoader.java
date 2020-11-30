@@ -15,9 +15,7 @@ public class DynamicLoader {
 
     //public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
     public static BaseConverter singleClassLoader(String name, String path) throws
-            ClassNotFoundException, 
-            IllegalAccessException, 
-            InstantiationException {
+        ClassNotFoundException, IllegalAccessException, InstantiationException {
         
         ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
         ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
@@ -85,5 +83,4 @@ public class DynamicLoader {
        
         return path;
     }
-
 }
