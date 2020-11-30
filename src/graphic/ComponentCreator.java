@@ -88,16 +88,8 @@ public class ComponentCreator extends JFrame {
     JComboBox<String> createComboBox(ArrayList<String> items) {
         JComboBox<String> object = new JComboBox<String>();
         for (String item : items) {
-            object.addItem(item);
-        }
-        return object;
-    }
-
-    JComboBox<String> updateComboBox(ArrayList<String> items) {
-        JComboBox<String> object = new JComboBox<String>();
-        object.removeAllItems();
-        for (String item : items) {
-            object.addItem(item);
+            if (!item.equals("BaseConverter") && !item.equals("MeasureType"))
+                object.addItem(item);
         }
         return object;
     }

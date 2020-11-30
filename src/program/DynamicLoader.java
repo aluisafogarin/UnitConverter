@@ -13,28 +13,18 @@ public class DynamicLoader {
     private static ArrayList<String> classesNames = new ArrayList<String>();
     private static ArrayList<String> typeClass = new ArrayList<String>();
 
-    //public static void startDynamicClassLoader(String[] classNames, String[] classPath) throws 
     public static BaseConverter singleClassLoader(String name, String path) throws
         ClassNotFoundException, IllegalAccessException, InstantiationException {
         
         ClassLoader parentClassLoader = ProjectClassLoader.class.getClassLoader();
         ProjectClassLoader classLoader = new ProjectClassLoader(parentClassLoader);
-        
-        //System.out.println("Tentando iniciar a classe: " + name);
-        //System.out.println("Estou usando o path para a classe: " + path);
         Class myClass = classLoader.loadClass("converters." + name); 
-
-        //Thread.currentThread().setContextClassLoader(parentClassLoader);
             
         BaseConverter classObject = (BaseConverter) myClass.newInstance();
-
-        //create new class loader so classes can be reloaded.
         classLoader = new ProjectClassLoader(parentClassLoader);
         myClass = classLoader.loadClass("converters." + name, path.toString());
 
         classObject = (BaseConverter) myClass.newInstance();
-
-        System.out.println("Class Loaded: " + name);
         return classObject;
     }
 

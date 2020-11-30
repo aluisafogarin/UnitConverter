@@ -19,32 +19,46 @@ public class ConversionManagement
         this.fromUnitClass = fromUnit + ".class";
         this.toUnit = toUnit;
         this.toUnitClass = toUnit + ".class";
-        System.out.println("INICIEI OBJETO CONVERSION MANAGEMENT");
+        System.out.println("Conversion management object");
     }
 
-    public void manager() throws 
-        ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public double convert(double value) throws 
+            ClassNotFoundException, IllegalAccessException, InstantiationException {
+        
+        BaseConverter convertFrom = 
+            DynamicLoader.singleClassLoader(fromUnit, DynamicLoader.getSingleClassPath(fromUnit));
+        
+        BaseConverter convertTo = 
+            DynamicLoader.singleClassLoader(toUnit, DynamicLoader.getSingleClassPath(toUnit));
+
+        double newValue = convertTo.fromBasicUnit(convertFrom.toBasicUnit(value));
+        System.out.println("Convert from: " + convertFrom + " to " + convertTo + "results: " + newValue);
+        return newValue;
+    }
+
+    public double manager(double value) throws 
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
         DynamicLoader.setClassesName();
         loadClasses();
+        return convert(value);
     }
 
     public void loadClasses() throws 
-        ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
-        /* First of all, fromUnity is loaded */
-        BaseConverter fromUnitObject = 
-            DynamicLoader.singleClassLoader(fromUnit, DynamicLoader.getSingleClassPath(fromUnit));
-            setTypeConversion(fromUnitObject);
+            ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        /* First of all, fromUnit is loaded */
+        BaseConverter fromUnitObject = DynamicLoader.singleClassLoader(fromUnit,
+                DynamicLoader.getSingleClassPath(fromUnit));
+        setTypeConversion(fromUnitObject);
 
         for (String className : DynamicLoader.getClassesNames()) {
             if (!className.equals("BaseConverter") && !className.equals("MeasureType")) {
                 for (String classPath : DynamicLoader.getAllClassesPath()) {
                     if (classPath.contains(className)) {
-                        BaseConverter classObject = 
-                            DynamicLoader.singleClassLoader(className, classPath);
+                        BaseConverter classObject = DynamicLoader.singleClassLoader(className, classPath);
                         MeasureType typeClass = classObject.getMeasureType();
-
-                        if ((typeConversion).contains(typeClass.name())) 
+                    
+                        if ((typeConversion).contains(typeClass.name()))
                             setAvailableClasses(className);
                     }
                 }

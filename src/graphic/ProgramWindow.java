@@ -40,7 +40,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     // private BaseWindow baseWindow;
-    
+
     private ComponentCreator componentCreator = new ComponentCreator();
     private JPanel panelTop;
     private JPanel panelTypeConversion;
@@ -53,9 +53,6 @@ public class ProgramWindow extends JFrame implements ActionListener {
     private JMenu menuHelp;
     private JMenu menuConfig;
     private JMenu menuLanguage;
-    private JButton buttonArea;
-    private JButton buttonLenght;
-    private JButton buttonVolume;
     private JMenuItem menuItemDisclaimer;
     private JMenuItem menuItemClose;
     private JMenuItem menuItemHelp;
@@ -69,11 +66,12 @@ public class ProgramWindow extends JFrame implements ActionListener {
     private JLabel labelHeader;
     private JLabel labelBottom;
     private JComboBox fromUnitBox = new JComboBox<>();
-    private JComboBox toUnitBox;
+    private JComboBox toUnitBox = new JComboBox<>();
 
     private String fromUnitClass;
     private String toUnitClass;
-    private String typeConversion;
+    private double value = 0;
+    private double newValue = 0;
 
     ProgramWindow(String title) throws HeadlessException {
         super(title);
@@ -88,36 +86,31 @@ public class ProgramWindow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent event) {
 
         // Menu item treatment
-        if (event.getSource() == this.menuItemAbout) { 
+        if (event.getSource() == this.menuItemAbout) {
             System.out.println(event.getSource());
-            System.out.println("CLICOU NO ABOUT"); 
+            System.out.println("CLICOU NO ABOUT");
         }
         if (event.getSource() == this.menuItemClose)
-           exit();
-        if (event.getSource() == this.menuItemDisclaimer) { 
-            System.out.println(event.getSource());   
+            exit();
+        if (event.getSource() == this.menuItemDisclaimer) {
+            System.out.println(event.getSource());
             System.out.println("CLICOU NO DISCLAIMER");
         }
-        //if (actionEvent.getSource() == this.menuItemHelp);
-        if (event.getSource() == this.menuItemLangEN) 
+        // if (actionEvent.getSource() == this.menuItemHelp);
+        if (event.getSource() == this.menuItemLangEN)
             System.out.println("CLICOU NO EN");
-        if (event.getSource() == this.menuItemLangPT) 
+        if (event.getSource() == this.menuItemLangPT)
             System.out.println("CLICOU NO PT");
 
-        // Button treatment
-        switch(event.getActionCommand()) {
-            case "Area":
-                System.out.println("Area");
-                //toUnitBox = ComponentCreator.updateComboBox();
-                break;
-            case "Lenght":
-                System.out.println("Lenght");
-                //toUnitBox = ComponentCreator.updateComboBox();
-                break;
-            case "Volume":
-                System.out.println("Volume");
-                //toUnitBox = ComponentCreator.updateComboBox();
-                break;
+        if (event.getSource() == this.inputValue) {
+            this.value = (double) (Integer.parseInt(inputValue.getText()));
+            verifyEntry();
+        }
+
+        if (event.getSource() == this.outputValue) {
+            int intValue = (int) newValue;
+            outputValue.setText(Integer.toString(intValue));
+            System.out.println(intValue);
         }
 
         if (event.getSource() == this.fromUnitBox) {
@@ -132,8 +125,22 @@ public class ProgramWindow extends JFrame implements ActionListener {
     }
 
     public void verifyEntry() {
-        if (fromUnitClass != null && toUnitClass != null) {
-            ConversionManagement control = new ConversionManagement(fromUnitClass, toUnitClass);
+        if (fromUnitClass != null && toUnitClass != null && value != 0) {
+            try {
+                ConversionManagement control = new ConversionManagement(fromUnitClass, toUnitClass);
+                newValue = control.manager(value);
+            } catch(InstantiationException e) {
+                System.out.println("Error to instantiate object: " + e.getMessage());
+            } 
+            catch(ClassNotFoundException e) {
+                System.out.println("Error to load " + e.getClass() + " : " + e.getMessage());
+            } 
+            catch(ClassCastException e) {
+               System.out.println("Error during class cast process: " + e.getMessage());
+            } 
+            catch (IllegalAccessException e) {
+                System.out.println("Illegal access: " + e.getMessage());
+            }
         }
     }
 
@@ -152,23 +159,21 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
-    public void bindComboBox(ActionListener listener, JPanel panel) {
-       // System.out.println("BIND BOX PORRA");
+    public void bindItemsPanel(ActionListener listener, JPanel panel) {
         for (Component c : panel.getComponents()) {
-            //System.out.println(c.getName());
             if (c instanceof JComboBox) {
-                //System.out.println(((JComboBox) c).getSelectedIndex());
-                //a(this, (JComboBox) c);
                 ((JComboBox) c).addActionListener(this);
+            }
+            if (c instanceof JTextField) {
+                ((JTextField) c).addActionListener(this);
             }
         }
     }
 
     public void bindPanel() {
         for (Component c : this.getContentPane().getComponents()) {
-            System.out.println(c.getName());
             if (c instanceof JPanel) {
-                bindComboBox(this, (JPanel) c);
+                bindItemsPanel(this, (JPanel) c);
             }
         }
     }
@@ -188,7 +193,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5));
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(5, 1));
+        this.setLayout(new GridLayout(4, 1));
     }
 
     private void setMenus() {
@@ -225,7 +230,6 @@ public class ProgramWindow extends JFrame implements ActionListener {
 
     private void setLayout() {
         setPanelTop();
-        setTypeConversionPanel();
         setConvertFromPanel();
         setConvertToPanel();
         setPanelBottom();
@@ -241,25 +245,6 @@ public class ProgramWindow extends JFrame implements ActionListener {
         panelTop.add(labelHeader);
 
         this.add(panelTop, BorderLayout.NORTH);
-    }
-
-    private void setTypeConversionPanel() {
-        panelTypeConversion = componentCreator.createPanel();
-        panelTypeConversion.setBackground(Color.LIGHT_GRAY);
-        panelTypeConversion.setLayout(new FlowLayout());
-
-        buttonArea = componentCreator.createButton("Area");
-        buttonArea.addActionListener(this);
-        buttonLenght = componentCreator.createButton("Lenght");
-        buttonLenght.addActionListener(this);
-        buttonVolume = componentCreator.createButton("Volume");
-        buttonVolume.addActionListener(this);
-
-        panelTypeConversion.add(buttonArea);
-        panelTypeConversion.add(buttonLenght);
-        panelTypeConversion.add(buttonVolume);
-
-        this.add(panelTypeConversion, BorderLayout.NORTH);
     }
 
     private void setConvertFromPanel() {
