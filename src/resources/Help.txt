@@ -1,0 +1,1 @@
+Select the unit on "Convert from" and "Convert to". Next, insert the value on the text field and type "Enter". The converted value will be showed on the field right bellow. 

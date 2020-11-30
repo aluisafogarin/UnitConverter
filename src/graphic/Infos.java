@@ -3,8 +3,6 @@ package graphic;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Infos {
@@ -14,12 +12,14 @@ public class Infos {
     public static String date;
     public static String helpFile;
     public static String disclaimerFile;
+    public static String aboutFile;
 
     public static String version = "Ver. 1.0";
-    public static String ResourceFolder = "/resources/";
+    public static String ResourceFolder = "\\resources\\";
     public static String sep = System.getProperty("file.separator");
     public static String path = System.getProperty("user.dir") + sep + "UnitConverter" + sep 
-        + "src" + sep + ResourceFolder + sep; 
+        + "src" + ResourceFolder;
+    public static LanguagePattern languageInfos;
 
     public Infos() {
         String[] infoText = getAtributes(getTextFromFile(defineLanguageFile()));
@@ -30,19 +30,23 @@ public class Infos {
         date = infoText[4];
         helpFile = infoText[5];
         disclaimerFile = infoText[6];
+        aboutFile = infoText[7];
     }
 
     public String defineLanguageFile() {
         String language = System.getProperty("user.language");
         String languageFile = "";
 
-        if (language.equals("pt"))
+        if (language.equals("pt")) {
             languageFile = "PortugueseInfos.txt";
-        else 
+            Infos.languageInfos = LanguagePattern.PORTUGUESE;
+        } else {
+            Infos.languageInfos = LanguagePattern.ENGLISH;
             languageFile = "EnglishInfos.txt";
-        System.out.println("Estou em define language: " + languageFile);
+        }
         return languageFile;
     }
+
 
     public static String getAbout() {
         StringBuilder aboutText = new StringBuilder();
@@ -70,16 +74,17 @@ public class Infos {
         return getTextFromFile(path + helpFile);
     }
 
-    
     public static String getLongVersion() {
-        System.out.println("longVersion " + systemName + " - " + version + " - " + date);
         return (systemName + " - " + version + " - " + date);
     }
 
     public static String getShortVersion() {
-    return (version + " - " + date);
+        return (version + " - " + date);
     }
 
+    public static LanguagePattern getLanguagePatter() {
+        return languageInfos;
+    }
     public static String getTextFromFile(String fileName) {
         StringBuilder fileText = new StringBuilder();
 
@@ -92,8 +97,6 @@ public class Infos {
         } catch (IOException e) {
             System.out.println("Error reading " + fileName + "\n" + e.getMessage());
         }
-        System.out.println("Estou em getTextFromFile: " + fileName);
-        System.out.println("Acabei de ler esse arquivo: " + fileText.toString());
         
         return fileText.toString();
     }

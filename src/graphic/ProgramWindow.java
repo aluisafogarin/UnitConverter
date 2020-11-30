@@ -3,25 +3,13 @@ package graphic;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.text.Normalizer.Form;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.ComboBoxEditor;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +17,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -39,11 +26,9 @@ import program.DynamicLoader;
 public class ProgramWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
-    // private BaseWindow baseWindow;
 
     private ComponentCreator componentCreator = new ComponentCreator();
     private JPanel panelTop;
-    private JPanel panelTypeConversion;
     private JPanel panelConvertFrom;
     private JPanel panelConvertTo;
     private JPanel panelBottom;
@@ -51,13 +36,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
     private JMenuBar menuBar;
     private JMenu menuFile;
     private JMenu menuHelp;
-    private JMenu menuConfig;
-    private JMenu menuLanguage;
     private JMenuItem menuItemDisclaimer;
     private JMenuItem menuItemClose;
     private JMenuItem menuItemHelp;
-    private JMenuItem menuItemLangPT;
-    private JMenuItem menuItemLangEN;
     private JMenuItem menuItemAbout;
     private JTextField inputValue;
     private JTextField outputValue;
@@ -84,30 +65,27 @@ public class ProgramWindow extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-
-        // Menu item treatment
         if (event.getSource() == this.menuItemAbout) {
-            System.out.println(event.getSource());
-            System.out.println("CLICOU NO ABOUT");
+            new DialogWindow(this, Infos.languageInfos.getAbout(), Infos.getAbout());
         }
+
         if (event.getSource() == this.menuItemClose)
             exit();
+
         if (event.getSource() == this.menuItemDisclaimer) {
-            System.out.println(event.getSource());
-            System.out.println("CLICOU NO DISCLAIMER");
+            new DialogWindow(this, Infos.languageInfos.getDisclaimer() + Infos.getLongVersion(), 
+                Infos.getTextFromFile(Infos.disclaimerFile));
         }
-        // if (actionEvent.getSource() == this.menuItemHelp);
-        if (event.getSource() == this.menuItemLangEN)
-            System.out.println("CLICOU NO EN");
-        if (event.getSource() == this.menuItemLangPT)
-            System.out.println("CLICOU NO PT");
+        
+        if (event.getSource() == this.menuItemHelp) {
+            new DialogWindow(this, Infos.languageInfos.getHelp() + Infos.getLongVersion(), 
+                Infos.getTextFromFile(Infos.helpFile));
+        }
 
         if (event.getSource() == this.inputValue) {
             this.value = (double) (Integer.parseInt(inputValue.getText()));
             verifyEntry();
-            //int intValue = (int) newValue;
             outputValue.setText(String.valueOf(newValue));
-            //System.out.println(intValue);
         }
 
         if (event.getSource() == this.fromUnitBox) {
@@ -182,7 +160,6 @@ public class ProgramWindow extends JFrame implements ActionListener {
     public void start() throws 
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.setVisible(true);
-        //controler.manager();
     }
 
     private void setWindow() {
@@ -195,31 +172,22 @@ public class ProgramWindow extends JFrame implements ActionListener {
 
     private void setMenus() {
 
-        menuFile = componentCreator.createMenu("File", 'F');
-        menuHelp = componentCreator.createMenu("Help", 'H');
-        menuConfig = componentCreator.createMenu("Config", 'C');
-        menuLanguage = componentCreator.createMenu("Language", 'L');
+        menuFile = componentCreator.createMenu(Infos.languageInfos.getFile(), 'F');
+        menuHelp = componentCreator.createMenu(Infos.languageInfos.getHelp(), 'H');
 
-        menuItemHelp = componentCreator.createMenuItem("Help", 'H');
-        menuItemAbout = componentCreator.createMenuItem("About", 'A');
-        menuItemDisclaimer = componentCreator.createMenuItem("Disclaimer", 'D');
-        menuItemClose = componentCreator.createMenuItem("Exit", 'X');
-        menuItemLangEN = componentCreator.createMenuItem("English");
-        menuItemLangPT = componentCreator.createMenuItem("Português");
+        menuItemHelp = componentCreator.createMenuItem(Infos.languageInfos.getHelp(), 'H');
+        menuItemAbout = componentCreator.createMenuItem(Infos.languageInfos.getAbout(), 'A');
+        menuItemDisclaimer = componentCreator.createMenuItem(Infos.languageInfos.getDisclaimer(), 'D');
+        menuItemClose = componentCreator.createMenuItem(Infos.languageInfos.getExit(), 'X');
 
         menuFile.add(menuItemDisclaimer);
         menuFile.add(menuItemClose);
-
-        menuConfig.add(menuLanguage);
-        menuLanguage.add(menuItemLangEN);
-        menuLanguage.add(menuItemLangPT);
 
         menuHelp.add(menuItemAbout);
         menuHelp.add(menuItemHelp);
 
         menuBar = new JMenuBar();
         menuBar.add(menuFile);
-        menuBar.add(menuConfig);
         menuBar.add(menuHelp);
 
         this.setJMenuBar(menuBar);
@@ -250,7 +218,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
         panelConvertFrom.setBackground(Color.LIGHT_GRAY);
         panelConvertFrom.setLayout(new FlowLayout());
 
-        labelConvertFrom = componentCreator.createLabel("Convert From", 16, false);
+        labelConvertFrom = componentCreator.createLabel(Infos.languageInfos.getConvertFrom(), 16, false);
         inputValue = componentCreator.createTextField(true);
         fromUnitBox = componentCreator.createComboBox(DynamicLoader.getClassesNames());
         fromUnitBox.addItemListener(null);
@@ -267,7 +235,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
         panelConvertTo.setBackground(Color.LIGHT_GRAY);
         panelConvertTo.setLayout(new FlowLayout());
 
-        labelConvertTo = componentCreator.createLabel("To", 16, false);
+        labelConvertTo = componentCreator.createLabel(Infos.languageInfos.getConvertTo(), 16, false);
         outputValue = componentCreator.createTextField(false);
         toUnitBox = componentCreator.createComboBox(DynamicLoader.getClassesNames());
 
@@ -283,7 +251,7 @@ public class ProgramWindow extends JFrame implements ActionListener {
         panelBottom.setBackground(Color.GRAY);
         panelBottom.setLayout(new FlowLayout());
 
-        labelBottom = componentCreator.createLabel("Bottom", 12, false);
+        labelBottom = componentCreator.createLabel(Infos.getShortVersion(), 12, false);
         panelBottom.add(labelBottom);
 
         this.add(panelBottom, BorderLayout.SOUTH);
