@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+C:\Users\analu\Documents\Projetos\project02\UnitConverter\.metadata\.plugins\org.eclipse.jdt.core
+1342381753.index
