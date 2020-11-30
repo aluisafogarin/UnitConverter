@@ -19,28 +19,32 @@ public class ConversionManagement
         this.fromUnitClass = fromUnit + ".class";
         this.toUnit = toUnit;
         this.toUnitClass = toUnit + ".class";
+        System.out.println("INICIEI OBJETO CONVERSION MANAGEMENT");
     }
 
-    public void manager() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void manager() throws 
+        ClassNotFoundException, InstantiationException, IllegalAccessException {
         DynamicLoader.setClassesName();
         loadClasses();
     }
 
-    public void loadClasses() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
-
+    public void loadClasses() throws 
+        ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
         /* First of all, fromUnity is loaded */
-        BaseConverter fromUnitObject = DynamicLoader.singleClassLoader(fromUnit,
-                DynamicLoader.getSingleClassPath(fromUnit));
-        setTypeConversion(fromUnitObject);
+        BaseConverter fromUnitObject = 
+            DynamicLoader.singleClassLoader(fromUnit, DynamicLoader.getSingleClassPath(fromUnit));
+            setTypeConversion(fromUnitObject);
 
         for (String className : DynamicLoader.getClassesNames()) {
             if (!className.equals("BaseConverter") && !className.equals("MeasureType")) {
                 for (String classPath : DynamicLoader.getAllClassesPath()) {
                     if (classPath.contains(className)) {
-                        BaseConverter classObject = DynamicLoader.singleClassLoader(className, classPath);
+                        BaseConverter classObject = 
+                            DynamicLoader.singleClassLoader(className, classPath);
                         MeasureType typeClass = classObject.getMeasureType();
 
-                        if ((typeConversion).contains(typeClass.name()))
+                        if ((typeConversion).contains(typeClass.name())) 
                             setAvailableClasses(className);
                     }
                 }
@@ -63,5 +67,15 @@ public class ConversionManagement
 
     public void setAvailableClasses(String className) {
         availableClasses.add(className);
+    }
+
+    public void setFromUnitClass(String className) {
+        this.fromUnit = className;
+        this.fromUnitClass = className + ".class";
+    }
+
+    public void setToUnitClass(String className) {
+        this.toUnit = className;
+        this.toUnitClass = className + ".class";
     }
 }

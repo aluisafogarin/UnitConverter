@@ -1,6 +1,5 @@
 package program;
 
-import graphic.AntigaGUI;
 import graphic.Infos;
 import graphic.MainGUI;
 
@@ -31,13 +30,13 @@ public class projectMain
     public void start() throws 
             ClassNotFoundException, IllegalAccessException, InstantiationException {
         System.out.println("Starting the program...");
-        ConversionManagement controler = new ConversionManagement("MetreConverter", "CentimetreConverter");
-        controler.manager();
 
-        System.out.println("All classes: " + DynamicLoader.getClassesNames());
-        System.out.println("The type of conversion is: " + controler.getTypeConversion());
-        System.out.println("Available classes: " + controler.getAvailableClasses());
-        //System.getProperties(); //debuguei esta linha, há várias propriedades que não estão na documentação!
+        //ConversionManagement controler = new ConversionManagement("MetreConverter", "CentimetreConverter");
+        //controler.manager();
+
+        //System.out.println("All classes: " + DynamicLoader.getClassesNames());
+        //System.out.println("The type of conversion is: " + controler.getTypeConversion());
+    
         Infos text = new Infos();
         //AntigaGUI.exec();
         MainGUI.mainInterface();
