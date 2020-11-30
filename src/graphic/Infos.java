@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class Infos {
     public static String authors;
@@ -43,6 +44,42 @@ public class Infos {
         return languageFile;
     }
 
+    public static String getAbout() {
+        StringBuilder aboutText = new StringBuilder();
+
+        aboutText.append("\n");
+        aboutText.append(systemName + "\n");
+        aboutText.append(date + "- ");
+        aboutText.append(version + "\n");
+        aboutText.append(authors + "\n" + "\n");
+        aboutText.append(copyRight + "\n");
+
+        return aboutText.toString();
+    }
+
+    public static String[] getAtributes(String fileText) {
+        String[] infoArray = fileText.toString().split(Pattern.quote("|"));
+        return infoArray;
+    }
+
+    public static String getDisclaimerText() {
+        return getTextFromFile(path + disclaimerFile);
+    }
+
+    public static String getHelpText() {
+        return getTextFromFile(path + helpFile);
+    }
+
+    
+    public static String getLongVersion() {
+        System.out.println("longVersion " + systemName + " - " + version + " - " + date);
+        return (systemName + " - " + version + " - " + date);
+    }
+
+    public static String getShortVersion() {
+    return (version + " - " + date);
+    }
+
     public static String getTextFromFile(String fileName) {
         StringBuilder fileText = new StringBuilder();
 
@@ -57,34 +94,7 @@ public class Infos {
         }
         System.out.println("Estou em getTextFromFile: " + fileName);
         System.out.println("Acabei de ler esse arquivo: " + fileText.toString());
+        
         return fileText.toString();
-
-    }
-
-    public static String[] getAtributes(String fileText) {
-        String[] infoArray = fileText.toString().split("|");
-        System.out.println("Estou em getAtributes ");
-        return infoArray;
-    }
-
-    public static String getAbout() {
-        StringBuilder aboutText = new StringBuilder();
-
-        aboutText.append("\n");
-        aboutText.append(systemName + "\n");
-        aboutText.append(date + "- ");
-        aboutText.append(version + "\n");
-        aboutText.append(authors + "\n" + "\n");
-        aboutText.append(copyRight + "\n");
-
-        return aboutText.toString();
-    }
-
-    public static String getDisclaimerText() {
-        return getTextFromFile(path + disclaimerFile);
-    }
-
-    public static String getHelpText() {
-        return getTextFromFile(path + helpFile);
     }
 } 

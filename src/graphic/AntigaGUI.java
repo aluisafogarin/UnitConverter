@@ -53,6 +53,29 @@ public class AntigaGUI extends javax.swing.JFrame {
         Disclaimer = new javax.swing.JMenuItem();
         Credits = new javax.swing.JMenuItem();
 
+        /* 
+        BoxConvertFrom = new javax.swing.JComboBox<>();
+        BoxTo = new javax.swing.JComboBox<>();
+        //TextConvertFrom = new javax.swing.JTextField();
+        //TextTo = new javax.swing.JTextField();
+        //LabelConvertFrom = new javax.swing.JLabel();
+        //jLabel2 = new javax.swing.JLabel();
+        //PanelBottom = new javax.swing.JPanel();
+        LabelDevs = new javax.swing.JLabel();
+        LabelSI400 = new javax.swing.JLabel();
+        //PanelBottom1 = new javax.swing.JPanel();
+        LabelName = new javax.swing.JLabel();
+        //MenuBar = new javax.swing.JMenuBar();
+        //MenuFile = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        //Close = new javax.swing.JMenuItem();
+        //MenuHelp = new javax.swing.JMenu();
+        //Help = new javax.swing.JMenuItem();
+        //Disclaimer = new javax.swing.JMenuItem();
+        Credits = new javax.swing.JMenuItem();
+        */
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         /* From Unity Box */

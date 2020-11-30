@@ -1,14 +1,12 @@
 package graphic;
 
-import javax.print.event.PrintEvent;
-
 public class MainGUI {
     public static void mainInterface() 
     {
         try 
         {
-            //MainWindow graphicInterface = new MainWindow(Info.getLongVersion());
-            //graphicInterface.go();
+            ProgramWindow graphicInterface = new ProgramWindow(Infos.getLongVersion());
+            graphicInterface.start();
         }
         catch (Exception exceptionValue) 
         {

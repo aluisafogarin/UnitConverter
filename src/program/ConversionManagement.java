@@ -12,7 +12,7 @@ public class ConversionManagement
     private String toUnit;
     private String toUnitClass;
     private String typeConversion;
-    private ArrayList<String> availableClasses = new ArrayList<String>();
+    private static ArrayList<String> availableClasses = new ArrayList<String>();
 
     public ConversionManagement(String fromUnit, String toUnit) {
         this.fromUnit = fromUnit;
@@ -21,29 +21,26 @@ public class ConversionManagement
         this.toUnitClass = toUnit + ".class";
     }
 
-    public void manager() throws 
-        ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void manager() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         DynamicLoader.setClassesName();
         loadClasses();
     }
 
-    public void loadClasses() throws 
-        ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
+    public void loadClasses() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+
         /* First of all, fromUnity is loaded */
-        BaseConverter fromUnitObject = 
-            DynamicLoader.singleClassLoader(fromUnit, DynamicLoader.getSingleClassPath(fromUnit));
-            setTypeConversion(fromUnitObject);
+        BaseConverter fromUnitObject = DynamicLoader.singleClassLoader(fromUnit,
+                DynamicLoader.getSingleClassPath(fromUnit));
+        setTypeConversion(fromUnitObject);
 
         for (String className : DynamicLoader.getClassesNames()) {
             if (!className.equals("BaseConverter") && !className.equals("MeasureType")) {
                 for (String classPath : DynamicLoader.getAllClassesPath()) {
                     if (classPath.contains(className)) {
-                        BaseConverter classObject = 
-                            DynamicLoader.singleClassLoader(className, classPath);
+                        BaseConverter classObject = DynamicLoader.singleClassLoader(className, classPath);
                         MeasureType typeClass = classObject.getMeasureType();
 
-                        if ((typeConversion).contains(typeClass.name())) 
+                        if ((typeConversion).contains(typeClass.name()))
                             setAvailableClasses(className);
                     }
                 }
@@ -55,7 +52,7 @@ public class ConversionManagement
         return typeConversion;
     }
 
-    public ArrayList<String> getAvailableClasses() {
+    public static ArrayList<String> getAvailableClasses() {
         return availableClasses;
     }
 

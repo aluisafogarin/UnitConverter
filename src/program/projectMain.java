@@ -2,6 +2,7 @@ package program;
 
 import graphic.AntigaGUI;
 import graphic.Infos;
+import graphic.MainGUI;
 
 public class projectMain 
 {
@@ -38,7 +39,8 @@ public class projectMain
         System.out.println("Available classes: " + controler.getAvailableClasses());
         //System.getProperties(); //debuguei esta linha, há várias propriedades que não estão na documentação!
         Infos text = new Infos();
-        AntigaGUI.exec();
+        //AntigaGUI.exec();
+        MainGUI.mainInterface();
     }
 
     public void finish() {
