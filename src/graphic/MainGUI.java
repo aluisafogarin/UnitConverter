@@ -1,5 +1,8 @@
 package graphic;
 
+/**
+ * Class to instantiate interface object.
+ */
 public class MainGUI {
     public static void mainInterface() 
     {

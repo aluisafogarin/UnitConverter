@@ -1,18 +1,29 @@
 package program;
 
 import java.io.File;
-import java.lang.invoke.MethodHandles.Lookup.ClassOption;
 
 import converters.BaseConverter;
-import converters.MeasureType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Organizes how classes will be loaded.
+ */
 public class DynamicLoader {
     private static ArrayList<String> classesNames = new ArrayList<String>();
-    private static ArrayList<String> typeClass = new ArrayList<String>();
 
+    
+    /** 
+     * Load every class alone, instead of all of them at once.
+     * 
+     * @param name Name of the class.
+     * @param path Path to .class file
+     * @return BaseConverter Returns an object to the loaded class
+     * @throws ClassNotFoundException In case dynamic class loader don't find a class.
+     * @throws IllegalAccessException In case there's no acess to some file.
+     * @throws InstantiationException In case dynamic class loader failed.
+     */
     public static BaseConverter singleClassLoader(String name, String path) throws
         ClassNotFoundException, IllegalAccessException, InstantiationException {
         
@@ -28,7 +39,9 @@ public class DynamicLoader {
         return classObject;
     }
 
-    /* Gets every .class file name */
+    /** 
+     * Set class names based on .class files.
+    */
     public static void setClassesName() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
@@ -44,11 +57,20 @@ public class DynamicLoader {
         }
     }
 
+    
+    /** 
+     * Get names of all classes.
+     * @return ArrayList<String> Returns an Array with all classes names.
+     */
     public static ArrayList<String> getClassesNames() {
         return classesNames;
     }
 
-    /* Gets the path to the .class */
+    
+    /** 
+     * Get path to all classes.
+     * @return String[] Returns an array with all paths.
+     */
     public static String[] getAllClassesPath() {
         String sep = System.getProperty("file.separator");
         File file = new File(System.getProperty("user.dir") + sep + "UnitConverter" + sep +
@@ -61,7 +83,12 @@ public class DynamicLoader {
         return classesPath;
     }
 
-    /* Get path to a single class */
+    
+    /** 
+     * Get path to a single class.
+     * @param className Name of the class.
+     * @return String Path to the class file.
+     */
     public static String getSingleClassPath(String className) {
         String[] classPath = getAllClassesPath();
         String path = "";

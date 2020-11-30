@@ -8,11 +8,30 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
+/**
+ * Custom ClassLoader to load classes dynamic.
+ * 
+ */
 public class ProjectClassLoader extends ClassLoader{
+
+    /**
+     * Class constructor
+     * 
+     * @param parent
+     */
     public ProjectClassLoader(ClassLoader parent) {
         super(parent);
     }
 
+    
+    /** 
+     * Load every class when it's called.
+     * 
+     * @param name Name of the class
+     * @param path Path to .class file
+     * @return Class Control return
+     * @throws ClassNotFoundException  In case dynamic class loader don't find a class.
+     */
     public Class loadClass(String name, String path) throws ClassNotFoundException {
         //String sep = System.getProperty("file.separator");
         String url = "file:" + path;

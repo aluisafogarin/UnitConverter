@@ -23,6 +23,9 @@ import javax.swing.SwingConstants;
 import program.ConversionManagement;
 import program.DynamicLoader;
 
+/**
+ * Interface base.
+ */
 public class ProgramWindow extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1L;
@@ -54,6 +57,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
     private double value = 0;
     private double newValue = 0;
 
+    /**
+     * Class constructor.  
+     */
     ProgramWindow(String title) throws HeadlessException {
         super(title);
         setWindow();
@@ -63,6 +69,11 @@ public class ProgramWindow extends JFrame implements ActionListener {
         bindPanel();
     }
 
+    
+    /** 
+     * Add functionalities to events.
+     * @param event Triggered event.
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == this.menuItemAbout) {
@@ -99,6 +110,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Verify if all fields were completed.
+     */
     public void verifyEntry() {
         if (fromUnitClass != null && toUnitClass != null && value != 0) {
             try {
@@ -119,6 +133,12 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    
+    /** 
+     * Makes easier to get events from items. 
+     * @param listener Event triggered.
+     * @param menu Name of menu.
+     */
     public void bindItems(ActionListener listener, JMenu menu) {
         for (Component c : menu.getMenuComponents()) {
             if (c instanceof JMenuItem) 
@@ -126,6 +146,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Build menus
+     */
     public void bindMenus() {
         for (Component c : this.getJMenuBar().getComponents()) {
             if (c instanceof JMenu) {
@@ -134,6 +157,12 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    
+    /** 
+     * Makes easier to get events from items on panels.
+     * @param listener Event.
+     * @param panel Name of panel.
+     */
     public void bindItemsPanel(ActionListener listener, JPanel panel) {
         for (Component c : panel.getComponents()) {
             if (c instanceof JComboBox) {
@@ -145,6 +174,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Builds panels.
+     */
     public void bindPanel() {
         for (Component c : this.getContentPane().getComponents()) {
             if (c instanceof JPanel) {
@@ -153,15 +185,28 @@ public class ProgramWindow extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Exit the GUI Window.
+     */
     public void exit() {
         System.exit(0);
     }
 
+    
+    /** 
+     * Makes GUI visible.
+     * @throws ClassNotFoundException In case dynamic class loader don't find a class.
+     * @throws IllegalAccessException In case there's no acess to some file.
+     * @throws InstantiationException In case dynamic class loader failed.
+     */
     public void start() throws 
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         this.setVisible(true);
     }
 
+    /**
+     * Set params to GUI Window.
+     */
     private void setWindow() {
         this.setSize((int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.5),
                 (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.5));
@@ -170,6 +215,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         this.setLayout(new GridLayout(4, 1));
     }
 
+    /**
+     * Set all menus from GUI.
+     */
     private void setMenus() {
 
         menuFile = componentCreator.createMenu(Infos.languageInfos.getFile(), 'F');
@@ -193,6 +241,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
+    /**
+     * Calls methods to build panels of the GUI.
+     */
     private void setLayout() {
         setPanelTop();
         setConvertFromPanel();
@@ -200,6 +251,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         setPanelBottom();
     }
 
+    /**
+     * Build panel top.
+     */
     private void setPanelTop() {
         panelTop = componentCreator.createPanel();
         panelTop.setLayout(new FlowLayout());
@@ -212,6 +266,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         this.add(panelTop, BorderLayout.NORTH);
     }
 
+    /**
+     * Build convert from panel.
+     */
     private void setConvertFromPanel() {
         DynamicLoader.setClassesName();
         panelConvertFrom = componentCreator.createPanel();
@@ -230,6 +287,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         this.add(panelConvertFrom, BorderLayout.CENTER);
     }
 
+    /**
+     * Build convert to panel. 
+     */
     private void setConvertToPanel() {
         panelConvertTo = componentCreator.createPanel();
         panelConvertTo.setBackground(Color.LIGHT_GRAY);
@@ -246,6 +306,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         this.add(panelConvertTo, BorderLayout.CENTER);
     }
 
+    /**
+     * Build bottom panel. 
+     */
     private void setPanelBottom() {
         panelBottom = componentCreator.createPanel();
         panelBottom.setBackground(Color.GRAY);

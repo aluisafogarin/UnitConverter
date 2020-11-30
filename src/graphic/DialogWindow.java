@@ -3,7 +3,6 @@ package graphic;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.Insets;
@@ -17,10 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Dialog Window to display about, disclaimer, help
+ */
 public class DialogWindow extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;
@@ -60,13 +61,20 @@ public class DialogWindow extends JDialog implements ActionListener {
         this.setVisible(true);
     }
 
+    
+    /** 
+     * Set the window visible.
+     * @param arg0
+     */
     @Override
     public void actionPerformed(ActionEvent arg0) {
         this.setVisible(false);
     }
 
+    /**
+     * Set display configurations.
+     */
     public void setDisplay() {
-        //display.setForeground(Color.black);
         display.setBackground(Color.GRAY);
         display.setEditable(false);
         display.setFocusable(true);

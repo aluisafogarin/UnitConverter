@@ -5,23 +5,34 @@ import java.util.ArrayList;
 import converters.BaseConverter;
 import converters.MeasureType;
 
+/**
+ * Class responsible to manage the conversion process.
+ */
 public class ConversionManagement 
 {
     private String fromUnit;
-    private String fromUnitClass;
     private String toUnit;
-    private String toUnitClass;
     private String typeConversion;
     private static ArrayList<String> availableClasses = new ArrayList<String>();
 
+    /**
+     * Class constructor.
+     */
     public ConversionManagement(String fromUnit, String toUnit) {
         this.fromUnit = fromUnit;
-        this.fromUnitClass = fromUnit + ".class";
         this.toUnit = toUnit;
-        this.toUnitClass = toUnit + ".class";
-        System.out.println("Conversion management object");
     }
 
+    
+    /** 
+     * Get input value and makes the conversion process.
+     * 
+     * @param value Inputvalue.
+     * @return double New value after conversion. 
+     * @throws ClassNotFoundException In case dynamic class loader don't find a class.
+     * @throws IllegalAccessException In case there's no acess to some file.
+     * @throws InstantiationException In case dynamic class loader failed.
+     */
     public double convert(double value) throws 
             ClassNotFoundException, IllegalAccessException, InstantiationException {
         
@@ -36,6 +47,17 @@ public class ConversionManagement
         return newValue;
     }
 
+    
+    /** 
+     * Class manager to first set classes names and only after that, start loading them and finally,
+     * make the conversion.
+     * 
+     * @param value Input value
+     * @return double New value after conversion. 
+     * @throws ClassNotFoundException In case dynamic class loader don't find a class.
+     * @throws IllegalAccessException In case there's no acess to some file.
+     * @throws InstantiationException In case dynamic class loader failed.
+     */
     public double manager(double value) throws 
             ClassNotFoundException, InstantiationException, IllegalAccessException {
         DynamicLoader.setClassesName();
@@ -43,6 +65,14 @@ public class ConversionManagement
         return convert(value);
     }
 
+    
+    /** 
+     * Loadclasses process
+     * 
+     * @throws ClassNotFoundException In case dynamic class loader don't find a class.
+     * @throws IllegalAccessException In case there's no acess to some file.
+     * @throws InstantiationException In case dynamic class loader failed.
+     */
     public void loadClasses() throws 
             ClassNotFoundException, InstantiationException, IllegalAccessException {
 
@@ -66,30 +96,44 @@ public class ConversionManagement
         }
     }
 
+    
+    /** 
+     * Get type of conversion.
+     * 
+     * @return String Type of conversion.
+     */
     public String getTypeConversion() {
         return typeConversion;
     }
 
+    
+    /** 
+     * Get available classes.
+     * 
+     * @return ArrayList<String> Array with available classes.
+     */
     public static ArrayList<String> getAvailableClasses() {
         return availableClasses;
     }
 
+    
+    /**  
+     * Set type conversion.
+     * 
+     * @param classObject Object from just loaded class.
+     */
     public void setTypeConversion(BaseConverter classObject) {
         MeasureType measureType = classObject.getMeasureType();
         typeConversion = measureType.name();
     }
 
+    
+    /** 
+     * Set available classes
+     * 
+     * @param className Name of available classes
+     */
     public void setAvailableClasses(String className) {
         availableClasses.add(className);
-    }
-
-    public void setFromUnitClass(String className) {
-        this.fromUnit = className;
-        this.fromUnitClass = className + ".class";
-    }
-
-    public void setToUnitClass(String className) {
-        this.toUnit = className;
-        this.toUnitClass = className + ".class";
     }
 }

@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/**
+ * Class with mutable information, according to the language. 
+ */
 public class Infos {
     public static String authors;
     public static String systemName;
@@ -21,6 +24,9 @@ public class Infos {
         + "src" + ResourceFolder;
     public static LanguagePattern languageInfos;
 
+    /**
+     * Class constructor.
+     */
     public Infos() {
         String[] infoText = getAtributes(getTextFromFile(defineLanguageFile()));
 
@@ -33,6 +39,11 @@ public class Infos {
         aboutFile = infoText[7];
     }
 
+    
+    /** 
+     * Define what is the language that will be used and which file.
+     * @return String Language file.
+     */
     public String defineLanguageFile() {
         String language = System.getProperty("user.language");
         String languageFile = "";
@@ -48,6 +59,11 @@ public class Infos {
     }
 
 
+    
+    /** 
+     * Get about text.
+     * @return String About text.
+     */
     public static String getAbout() {
         StringBuilder aboutText = new StringBuilder();
 
@@ -61,30 +77,67 @@ public class Infos {
         return aboutText.toString();
     }
 
+    
+    /** 
+     * Get atributes from language file.
+     * @param fileText Name of the file.
+     * @return String[] Array with atributes. 
+     */
     public static String[] getAtributes(String fileText) {
         String[] infoArray = fileText.toString().split(Pattern.quote("|"));
         return infoArray;
     }
 
+    
+    /** 
+     * Get disclaimer text.
+     * @return String Disclaimer text.
+     */
     public static String getDisclaimerText() {
         return getTextFromFile(path + disclaimerFile);
     }
 
+    
+    /** 
+     * Get help text.
+     * @return String Help text.
+     */
     public static String getHelpText() {
         return getTextFromFile(path + helpFile);
     }
 
+
+    /**  
+     * Get systemName, version and date.
+     * @return String
+     */
     public static String getLongVersion() {
         return (systemName + " - " + version + " - " + date);
     }
 
+    
+    /** 
+     * Get version and date.
+     * @return String
+     */
     public static String getShortVersion() {
         return (version + " - " + date);
     }
 
+    
+    /** 
+     * Get ENUM LanguagePatter based on the language of the program.
+     * @return LanguagePattern
+     */
     public static LanguagePattern getLanguagePatter() {
         return languageInfos;
     }
+    
+    /** 
+     * Reads files.
+     * @param fileName Name of the file.
+     * @return String Text from the file.
+     */
     public static String getTextFromFile(String fileName) {
         StringBuilder fileText = new StringBuilder();
 
