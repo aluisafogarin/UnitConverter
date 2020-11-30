@@ -105,12 +105,9 @@ public class ProgramWindow extends JFrame implements ActionListener {
         if (event.getSource() == this.inputValue) {
             this.value = (double) (Integer.parseInt(inputValue.getText()));
             verifyEntry();
-        }
-
-        if (event.getSource() == this.outputValue) {
-            int intValue = (int) newValue;
-            outputValue.setText(Integer.toString(intValue));
-            System.out.println(intValue);
+            //int intValue = (int) newValue;
+            outputValue.setText(String.valueOf(newValue));
+            //System.out.println(intValue);
         }
 
         if (event.getSource() == this.fromUnitBox) {
